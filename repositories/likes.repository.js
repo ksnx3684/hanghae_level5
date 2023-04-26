@@ -13,28 +13,46 @@ class LikeRepository {
   };
 
   postLike = async (postId, userId) => {
+    // Managed Transactions
     const t = await sequelize.transaction({
       isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
     });
-    await Likes.create({ postId, userId }, { transaction: t });
-    await Posts.increment({ likes: +1 }, { transaction: t, where: { postId } });
-    await t.commit();
-    return;
+    try {
+      await Likes.create({ postId, userId }, { transaction: t });
+      await Posts.increment(
+        { likes: +1 },
+        { transaction: t, where: { postId } }
+      );
+      await t.commit();
+      return;
+    } catch (err) {
+      await t.rollback();
+      throw new Error('Transaction Error');
+    }
   };
 
   postLikeCancel = async (postId, userId) => {
+    // Managed Transactions
     const t = await sequelize.transaction({
       isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
     });
-    await Likes.destroy({
-      transaction: t,
-      where: {
-        [Op.and]: [{ postId }, { userId }],
-      },
-    });
-    await Posts.decrement({ likes: +1 }, { transaction: t, where: { postId } });
-    await t.commit();
-    return;
+    try {
+      await Likes.destroy({
+        transaction: t,
+        where: {
+          [Op.and]: [{ postId }, { userId }],
+        },
+      });
+      await Posts.decrement(
+        { likes: +1 },
+        { transaction: t, where: { postId } }
+      );
+      await t.commit();
+      return;
+    } catch (err) {
+      await t.rollback();
+      throw new Error('Transaction Error');
+    }
   };
 
   myPostLike = async (userId) => {

@@ -29,7 +29,6 @@ class LikesController {
       }
     } catch (err) {
       console.log(err.message);
-      // await t.rollback();
       return res
         .status(400)
         .json({ errorMessage: '게시글 좋아요 실패하였습니다.' });

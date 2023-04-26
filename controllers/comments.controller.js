@@ -78,11 +78,9 @@ class CommentsController {
       await this.commentService
         .updateComment(postId, userId, nickname, comment, commentId)
         .catch((err) => {
-          return res
-            .status(400)
-            .json({
-              errorMessage: '댓글 수정이 정상적으로 처리되지 않았습니다.',
-            });
+          return res.status(400).json({
+            errorMessage: '댓글 수정이 정상적으로 처리되지 않았습니다.',
+          });
         });
     } catch (err) {
       console.log(err.message);
@@ -117,11 +115,9 @@ class CommentsController {
           .json({ errorMessage: '댓글의 삭제 권한이 존재하지 않습니다.' });
 
       await this.commentService.deleteComment(commentId).catch((err) => {
-        return res
-          .status(400)
-          .json({
-            errorMessage: '댓글 삭제가 정상적으로 처리되지 않았습니다.',
-          });
+        return res.status(400).json({
+          errorMessage: '댓글 삭제가 정상적으로 처리되지 않았습니다.',
+        });
       });
     } catch (err) {
       console.log(err.message);

@@ -11,12 +11,12 @@ class AuthService {
   existsNick = async (nickname) => {
     const existsNick = await this.authRepository.existsNick(nickname);
     return existsNick;
-  }
+  };
 
   login = async (nickname) => {
     const user = await this.authRepository.login(nickname);
     return user;
-  }
+  };
 }
 
 module.exports = AuthService;

@@ -8,8 +8,8 @@ class AuthRepository {
 
   existsNick = async (nickname) => {
     const existsNick = await Users.findOne({
-        where: { nickname: nickname },
-      });
+      where: { nickname: nickname },
+    });
     return existsNick;
   };
 

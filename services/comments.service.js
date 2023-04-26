@@ -1,10 +1,12 @@
 const CommentRepository = require('../repositories/comments.repository');
+const PostRepository = require('../repositories/posts.repository');
 
 class CommentService {
   commentRepository = new CommentRepository();
+  postRepository = new PostRepository();
 
   checkPost = async (postId) => {
-    const post = await this.commentRepository.checkPost(postId);
+    const post = await this.postRepository.findDetailPost(postId);
     return post;
   };
 
@@ -19,12 +21,23 @@ class CommentService {
   };
 
   createComment = async (postId, userId, nickname, comment) => {
-    const createCommentData = await this.commentRepository.createComment(postId, userId, nickname, comment);
+    const createCommentData = await this.commentRepository.createComment(
+      postId,
+      userId,
+      nickname,
+      comment
+    );
     return createCommentData;
   };
 
   updateComment = async (postId, userId, nickname, comment, commentId) => {
-    const commentData = await this.commentRepository.updateComment(postId, userId, nickname, comment, commentId);
+    const commentData = await this.commentRepository.updateComment(
+      postId,
+      userId,
+      nickname,
+      comment,
+      commentId
+    );
     return commentData;
   };
 

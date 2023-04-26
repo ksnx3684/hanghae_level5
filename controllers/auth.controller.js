@@ -45,15 +45,14 @@ class AuthController {
       }
 
       const user = await this.authService.signup(nickname, password);
-      
     } catch (err) {
-        console.log(err);
-        return res.status(400).json({
-            errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
-        });
+      console.log(err);
+      return res.status(400).json({
+        errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
+      });
     }
     return res.status(201).json({
-        message: '회원 가입에 성공하였습니다.',
+      message: '회원 가입에 성공하였습니다.',
     });
   };
 
